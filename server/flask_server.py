@@ -19,7 +19,7 @@ def update_registry():
     mac_address = request_json['mac_addr']
     remote_port = request.environ.get('REMOTE_PORT')
     StorageManager.update_registry(public_ip , remote_port, mac_address)
-    return jsonify(request_json), 200
+    return jsonify({'public_ip':public_ip, 'port_num':remote_port}), 200
 
 @app.route('/api/v1.0/get_device_data', methods=['POST'])
 def get_device_data():
