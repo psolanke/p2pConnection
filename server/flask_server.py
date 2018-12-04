@@ -30,4 +30,4 @@ def get_device_data():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run('0.0.0.0:8080',debug=True)

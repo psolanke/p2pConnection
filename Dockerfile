@@ -1,17 +1,11 @@
 FROM ubuntu:18.04
 
-#  
-# -- if you are using docker behind proxy, please set ENV --
-#
-
-#ENV http_proxy "http://proxy.yourdomain.com:8080/"
-#ENV https_proxy "http://proxy.yourdomain.com:8080/"
-
 ENV DEBIAN_FRONTEND nonineractive
 
-#
-# -- build tools --
-#
+RUN mkdir /app/
+WORKDIR /app/
+COPY . /app
+
 RUN apt update && apt upgrade -y
 
 RUN apt install python3 -y
@@ -31,18 +25,12 @@ RUN apt install libffi-dev -y
 RUN apt install libssl-dev -y
 RUN apt install libopencv-dev -y
 
-RUN mkdir /root/work 
-WORKDIR /root/work/
-
 RUN apt install git -y
-RUN git clone https://github.com/jlaine/aiortc.git
-
-RUN pip install aiohttp
-RUN pip install aiortc 
-RUN pip install opencv-python
+#RUN git clone https://github.com/psolanke/p2pConnection.git
+RUN pip install -r requirements.txt
 
 # --- for running --
 EXPOSE 8080
 
-WORKDIR /root/work/aiortc/examples/server/
-CMD [ "python3", "server.py", "-v" ]
+WORKDIR /app/server/
+CMD [ "python3", "flask_server.py"]
